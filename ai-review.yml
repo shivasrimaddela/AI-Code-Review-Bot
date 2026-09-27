@@ -21,9 +21,9 @@ jobs:
         # Replace "your-username/ai-code-review-bot@v1" with a published
         # tag once you push this repo, or use "./" if this workflow lives
         # in the same repo as action.yml.
-        uses: your-username/ai-code-review-bot@v1
+        uses: shivasrimaddela/ai-code-review-bot@v1
         with:
-          gemini_key: ${{ secrets.GEMINI_API_KEY }}
+          gemini_key: ${{ secrets.GOOGLE_AI_STUDIO }}
           # llm_provider: groq
-          # groq_key: ${{ secrets.GROQ_API_KEY }}
+          groq_key: ${{ secrets.GROQ_API_KEY }}
           max_diff_lines: "2000"
