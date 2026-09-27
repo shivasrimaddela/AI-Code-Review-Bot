@@ -1,0 +1,45 @@
+name: "AI Code Review Bot"
+description: "Reviews pull request diffs with an LLM and posts inline comments for bugs, security issues, and code smells."
+author: "your-name"
+branding:
+  icon: "eye"
+  color: "purple"
+
+inputs:
+  github_token:
+    description: "Token used to read PR diffs and post review comments. Defaults to the automatic GITHUB_TOKEN."
+    required: false
+    default: ${{ github.token }}
+  gemini_key:
+    description: "Gemini API key. Required unless llm_provider is 'groq'."
+    required: false
+  groq_key:
+    description: "Groq API key. Required only if llm_provider is 'groq'."
+    required: false
+  llm_provider:
+    description: "Which LLM backend to use: 'gemini' or 'groq'."
+    required: false
+    default: "gemini"
+  max_diff_lines:
+    description: "Maximum total diff lines to send to the model before truncating."
+    required: false
+    default: "2000"
+  max_files:
+    description: "Maximum number of changed files to review per run."
+    required: false
+    default: "25"
+  model_name:
+    description: "Override the default model name for the selected provider."
+    required: false
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    GITHUB_TOKEN: ${{ inputs.github_token }}
+    GEMINI_API_KEY: ${{ inputs.gemini_key }}
+    GROQ_API_KEY: ${{ inputs.groq_key }}
+    LLM_PROVIDER: ${{ inputs.llm_provider }}
+    MAX_DIFF_LINES: ${{ inputs.max_diff_lines }}
+    MAX_FILES: ${{ inputs.max_files }}
+    MODEL_NAME: ${{ inputs.model_name }}
